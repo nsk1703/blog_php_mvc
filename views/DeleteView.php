@@ -1,0 +1,1 @@
+<h1>Suppression de <?=$_GET['id']?></h1>

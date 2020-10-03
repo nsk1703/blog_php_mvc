@@ -1,0 +1,44 @@
+public function listCat($idPost)
+    {
+
+        global $db;
+        
+        $categories = [];
+
+        $req = $db->exec(
+            "SELECT c.*, pc.post_id
+                FROM post_category pc 
+                    INNER JOIN categories c 
+                        ON pc.category_id = c.id_cat 
+                            WHERE pc.post_id = ".$idPost);  
+                                // debug($req);
+        $req->setFetchMode(PDO::FETCH_ASSOC);
+        while($data = $req->fetch())
+        {   
+            // debug($data);
+            $categories[] = new Category($data);
+        }
+            // debug($categories);
+        return $categories;
+    }
+
+    private function catPosts($id)
+    {
+        if(!isset($id))
+        {   
+            throw new \Exception('Article inexistant!!'); 
+        }else{
+            $catPosts = $this->_postManager->listCat($id);
+        }
+
+        debug($catPosts);
+        // $this->_view->generate(array('catPosts' => $catPosts));
+        return $catPosts;
+    }
+
+                <?php debug($categories);?>
+                <?php foreach($catPosts as $catPost):?>
+                    <li>
+                        <a href="?page=category&id=<?= $catPost->id_cat() ?>&slug=<?= $catPost->slug()?>"><?= $catPost->name() ?></a>
+                    </li>
+                <?php endforeach;?> <?php debug($categories);?>

@@ -1,0 +1,6 @@
+<?php
+require_once '_classes/Db.php';
+
+$db = new DB(DATABASE_HOST, DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD, [
+    PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION
+]);
